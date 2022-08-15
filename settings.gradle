@@ -1,0 +1,6 @@
+rootProject.name = "BookKeeping"
+include ':app'
+include ':main'
+include ':core'
+include ':login'
+include ':home'

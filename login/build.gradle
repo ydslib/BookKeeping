@@ -1,0 +1,73 @@
+if (Config.isApp){
+    apply plugin: 'com.android.application'
+}else{
+    apply plugin: 'com.android.library'
+}
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Config.compileSdk
+
+    defaultConfig {
+        if (Config.isApp){
+            applicationId "com.crystallake.login"
+        }
+        minSdkVersion Config.minSdk
+        targetSdkVersion Config.targetSdk
+        versionCode Config.versionCode
+        versionName Config.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets{
+        main{
+            if (Config.isApp){
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }else{
+                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+            }
+        }
+    }
+
+    kapt {
+        arguments {
+            arg("AROUTER_MODULE_NAME", project.getName())
+            arg("AROUTER_GENERATE_DOC:", "enable")
+        }
+    }
+    buildFeatures{
+        dataBinding true
+    }
+}
+
+dependencies {
+
+    implementation "androidx.core:core-ktx:${Config.coreKtxVersion}"
+    implementation "androidx.appcompat:appcompat:${Config.appcompatVersion}"
+    implementation "com.google.android.material:material:${Config.materialVersion}"
+    implementation "androidx.constraintlayout:constraintlayout:${Config.constraintlayoutVersion}"
+    testImplementation "junit:junit:${Config.testJunitVersion}"
+    androidTestImplementation "androidx.test.ext:junit:${Config.androidTestJunitVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${Config.espressoCoreVersion}"
+
+    kapt "com.alibaba:arouter-compiler:${Config.aRouterVersion}"
+    implementation project(":core")
+    implementation "com.github.ydslib:Base:${Config.baseVersion}"
+
+}

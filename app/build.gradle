@@ -1,0 +1,79 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+
+}
+
+android {
+    compileSdk Config.compileSdk
+
+    defaultConfig {
+        applicationId "com.crystallake.bookkeeping"
+        minSdk Config.minSdk
+        targetSdk Config.targetSdk
+        versionCode Config.versionCode
+        versionName Config.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    kapt {
+        arguments {
+            arg("AROUTER_MODULE_NAME", project.getName())
+            arg("AROUTER_GENERATE_DOC:", "enable")
+        }
+    }
+
+    buildTypes {
+
+        debug {
+            debuggable true
+            minifyEnabled("ON" == project.COMPILE_RELEASE_ON_OFF)
+            zipAlignEnabled("ON" == project.COMPILE_RELEASE_ON_OFF)
+            shrinkResources("ON" == project.COMPILE_RELEASE_ON_OFF)
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "isDebug", "true"
+        }
+
+        release {
+            debuggable false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "isDebug", "false"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures{
+        dataBinding true
+    }
+
+}
+
+dependencies {
+
+    implementation "androidx.core:core-ktx:${Config.coreKtxVersion}"
+    implementation "androidx.appcompat:appcompat:${Config.appcompatVersion}"
+    implementation "com.google.android.material:material:${Config.materialVersion}"
+    implementation "androidx.constraintlayout:constraintlayout:${Config.constraintlayoutVersion}"
+    testImplementation "junit:junit:${Config.testJunitVersion}"
+    androidTestImplementation "androidx.test.ext:junit:${Config.androidTestJunitVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${Config.espressoCoreVersion}"
+    implementation "com.github.ydslib:Base:${Config.baseVersion}"
+    kapt "com.alibaba:arouter-compiler:${Config.aRouterVersion}"
+    implementation project(":core")
+
+    if (!Config.isApp){
+        implementation project(":main")
+        implementation project(":login")
+    }
+}
