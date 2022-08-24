@@ -1,0 +1,18 @@
+//api 项目的buildgralde
+
+apply from:'../../../configs/winit_base.gradle'
+
+dependencies {
+    // noinspection GradleDependency
+    implementation "androidx.core:core-ktx:$Config.coreKtx"
+    // noinspection GradleDependency
+    implementation "androidx.appcompat:appcompat:$Config.androidxAppcompat"
+    // noinspection GradleDependency
+    implementation "com.google.android.material:material:$Config.googleMaterial"
+
+    implementation "androidx.constraintlayout:constraintlayout:${Config.androidxConstraintLayout}"
+
+    implementation "com.google.code.gson:gson:$Config.googleGson"
+
+    implementation project(path: ':sdk-core')
+}

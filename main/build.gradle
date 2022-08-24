@@ -74,4 +74,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:${Config.espressoCoreVersion}"
     kapt "com.alibaba:arouter-compiler:${Config.aRouterVersion}"
     implementation "com.github.ydslib:Base:${Config.baseVersion}"
+
+    implementation project(":router")
+    implementation project(":config")
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.crystallake.login">
 
-    <application android:name=".LoginApp"></application>
+    <application android:name=".LoginApp">
+        <activity android:name=".LoginActivity"/>
+    </application>
 
 </manifest>

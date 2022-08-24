@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import com.crystallake.core.AppInit
 import com.crystallake.core.BaseApplication
+import com.crystallake.router.Router
 
 class HomeApp : BaseApplication(), AppInit {
 
@@ -11,12 +12,17 @@ class HomeApp : BaseApplication(), AppInit {
         const val TAG = "HomeApp"
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        Router.setUp(this)
+    }
+
     override fun initAllModuleAfterInitSdk(application: Application) {
-        Log.d(TAG,"initAllModuleAfterInitSdk")
+
     }
 
     override fun initAllModuleAfterAgreementDangerSdk(application: Application) {
-        Log.d(TAG,"initAllModuleAfterAgreementDangerSdk")
+        Log.d(TAG, "initAllModuleAfterAgreementDangerSdk")
     }
 
 }

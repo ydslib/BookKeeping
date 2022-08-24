@@ -75,5 +75,6 @@ dependencies {
     if (!Config.isApp){
         implementation project(":main")
         implementation project(":login")
+        implementation project(":mine")
     }
 }
