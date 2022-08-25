@@ -50,6 +50,12 @@ android {
     buildFeatures{
         dataBinding true
     }
+
+    kapt {
+        arguments {
+            arg("ROUTER_MODULE_NAME", project.getName())
+        }
+    }
 }
 
 dependencies {
@@ -66,4 +72,5 @@ dependencies {
     implementation project(":core")
     implementation project(":router")
     implementation project(":config")
+    kapt project(":router-compiler")
 }

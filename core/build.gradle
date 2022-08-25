@@ -38,6 +38,5 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:${Config.androidTestJunitVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${Config.espressoCoreVersion}"
 
-    api "com.alibaba:arouter-api:${Config.aRouterVersion}"
     api "com.github.ydslib:ResourceLib:${Config.resourceLibVersion}"
 }

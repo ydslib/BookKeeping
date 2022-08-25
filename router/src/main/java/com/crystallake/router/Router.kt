@@ -11,12 +11,22 @@ import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.crystallake.router.annotation.RouteType
 import com.crystallake.router.core.Warehouse
 import com.crystallake.router.exception.HandlerException
 import com.crystallake.router.exception.NoRouteFoundException
 import com.crystallake.router.facade.Postcard
-import com.crystallake.router.facade.RouteType
 import com.crystallake.router.facade.callback.NavigationCallback
+import com.crystallake.router.template.IRouteGroup
+import com.crystallake.router.template.IRouteRoot
+import com.crystallake.router.utils.ClassUtils
+import com.crystallake.router.utils.Consts
+import com.crystallake.router.utils.Consts.DOT
+import com.crystallake.router.utils.Consts.ROUTER_ROOT_PACKAGE
+import com.crystallake.router.utils.Consts.ROUTER_SP_CACHE_KEY
+import com.crystallake.router.utils.Consts.ROUTER_SP_KEY_MAP
+import com.crystallake.router.utils.Consts.SDK_NAME
+import com.crystallake.router.utils.PackageUtils
 
 class Router {
 
@@ -31,8 +41,59 @@ class Router {
 
         fun getInstance() = Holder.instance
 
+        @JvmStatic
         fun setUp(application: Application) {
             mContext = application
+            registerRouter(application)
+        }
+
+        @JvmStatic
+        @Synchronized
+        fun addRouteGroupDynamic(groupName: String, group: IRouteGroup?) {
+            if (Warehouse.groupsIndex.containsKey(groupName)) {
+                Warehouse.groupsIndex[groupName]?.getConstructor()?.newInstance()
+                    ?.loadInto(Warehouse.routes)
+                Warehouse.groupsIndex.remove(groupName)
+            }
+            group?.loadInto(Warehouse.routes)
+        }
+
+        fun registerRouter(context: Context) {
+            var routerMap: MutableSet<String>?
+
+            try {
+                if (PackageUtils.isNewVersion(context)) {
+                    routerMap =
+                        ClassUtils.getFileNameByPackageName(
+                            context,
+                            ROUTER_ROOT_PACKAGE
+                        )
+                    if (!routerMap.isNullOrEmpty()) {
+                        context.getSharedPreferences(ROUTER_SP_CACHE_KEY, Context.MODE_PRIVATE)
+                            .edit()
+                            .putStringSet(ROUTER_SP_KEY_MAP, routerMap).apply()
+                    }
+                    PackageUtils.updateVersion(context)
+                } else {
+                    routerMap =
+                        context.getSharedPreferences(ROUTER_SP_CACHE_KEY, Context.MODE_PRIVATE)
+                            .getStringSet(
+                                ROUTER_SP_KEY_MAP,
+                                mutableSetOf()
+                            )
+                }
+
+                routerMap?.forEach { className ->
+                    if (className.startsWith(ROUTER_ROOT_PACKAGE + DOT + SDK_NAME + Consts.SEPARATOR + Consts.SUFFIX_ROOT)) {
+                        ((Class.forName(className).getConstructor()
+                            .newInstance()) as IRouteRoot).loadInto(Warehouse.groupsIndex)
+                    }
+                }
+            } catch (e: Exception) {
+
+            }
+
+
         }
     }
 
@@ -72,7 +133,7 @@ class Router {
         if (uri == null || uri.toString().isEmpty()) {
             throw HandlerException(TAG + "Parameter is invalid!")
         } else {
-            return Postcard(uri.path, extractGroup(uri.path), uri)
+            return Postcard(uri.path, extractGroup(uri.path), uri, null)
         }
     }
 
@@ -105,6 +166,19 @@ class Router {
             throw NoRouteFoundException("No postcard!")
         }
         val routeMeta = Warehouse.routes[postcard.path]
+
+        if (routeMeta == null) {
+            if (!Warehouse.groupsIndex.containsKey(postcard.group)) {
+                throw NoRouteFoundException(TAG + "There is no route match the path [" + postcard.path + "], in group [" + postcard.group + "]")
+            } else {
+                try {
+                    addRouteGroupDynamic(postcard.group, null)
+                }catch (e:Exception){
+
+                }
+                completion(postcard)
+            }
+        }
 
         if (routeMeta != null) {
             postcard.destination = routeMeta.destination
@@ -236,6 +310,7 @@ class Router {
         return null
 
     }
+
 
     class Holder {
         companion object {

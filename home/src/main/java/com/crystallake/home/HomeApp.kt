@@ -15,6 +15,7 @@ class HomeApp : BaseApplication(), AppInit {
     override fun onCreate() {
         super.onCreate()
         Router.setUp(this)
+        println("HomeApp")
     }
 
     override fun initAllModuleAfterInitSdk(application: Application) {

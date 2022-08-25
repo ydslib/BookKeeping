@@ -15,10 +15,10 @@ class LoginApp : BaseApplication(), AppInit {
     override fun onCreate() {
         super.onCreate()
         Router.setUp(this)
+        println("LoginApp")
     }
 
     override fun initAllModuleAfterInitSdk(application: Application) {
-        Router.getInstance().register("/login/LoginActivity", LoginActivity::class.java)
     }
 
     override fun initAllModuleAfterAgreementDangerSdk(application: Application) {

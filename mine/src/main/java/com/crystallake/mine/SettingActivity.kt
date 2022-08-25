@@ -5,7 +5,10 @@ import com.crystallake.base.config.DataBindingConfig
 import com.crystallake.base.vm.BaseViewModel
 import com.crystallake.mine.databinding.ActivitySettingBinding
 import com.crystallake.router.Router
+import com.crystallake.router.annotation.Route
+import com.crystallake.router.facade.Postcard
 
+@Route(path = "/mine/SettingActivity")
 class SettingActivity : DataBindingActivity<ActivitySettingBinding,BaseViewModel>() {
 
 

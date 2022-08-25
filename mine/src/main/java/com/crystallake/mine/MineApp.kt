@@ -10,10 +10,10 @@ class MineApp : BaseApplication(), AppInit {
     override fun onCreate() {
         super.onCreate()
         Router.setUp(this)
+        println("MineApp")
     }
 
     override fun initAllModuleAfterInitSdk(application: Application) {
-        Router.getInstance().register("/mine/SettingActivity", SettingActivity::class.java)
     }
 
     override fun initAllModuleAfterAgreementDangerSdk(application: Application) {

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -19,6 +20,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        lintOptions { abortOnError false }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -27,6 +29,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    kapt {
+        arguments {
+            arg("ROUTER_MODULE_NAME", project.getName())
+        }
+    }
+
 }
 
 dependencies {
@@ -34,7 +43,6 @@ dependencies {
     implementation "androidx.core:core-ktx:${Config.coreKtxVersion}"
     implementation "androidx.appcompat:appcompat:${Config.appcompatVersion}"
     implementation "com.google.android.material:material:${Config.materialVersion}"
-    testImplementation "junit:junit:${Config.testJunitVersion}"
-    androidTestImplementation "androidx.test.ext:junit:${Config.androidTestJunitVersion}"
-    androidTestImplementation "androidx.test.espresso:espresso-core:${Config.espressoCoreVersion}"
+    api project(":router-annotation")
+    kapt project(":router-compiler")
 }

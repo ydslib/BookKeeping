@@ -18,12 +18,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    kapt {
-        arguments {
-            arg("AROUTER_MODULE_NAME", project.getName())
-            arg("AROUTER_GENERATE_DOC:", "enable")
-        }
-    }
 
     buildTypes {
 
@@ -69,8 +63,8 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:${Config.androidTestJunitVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${Config.espressoCoreVersion}"
     implementation "com.github.ydslib:Base:${Config.baseVersion}"
-    kapt "com.alibaba:arouter-compiler:${Config.aRouterVersion}"
     implementation project(":core")
+    implementation project(":router")
 
     if (!Config.isApp){
         implementation project(":main")

@@ -18,7 +18,6 @@ class HomeActivity : DataBindingActivity<ActivityHomeBinding, BaseViewModel>() {
         super.initData()
 
         val postcard = Postcard("test", "test1", null, null)
-        println(postcard.bundle)
 
         supportFragmentManager.beginTransaction().replace(R.id.homeContainer, HomeFragment())
             .commit()
