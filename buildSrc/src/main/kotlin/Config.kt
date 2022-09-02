@@ -1,6 +1,6 @@
 object Config {
 
-    const val isApp = true
+    const val isApp = false
 
     const val compileSdk = 31
     const val minSdk = 21

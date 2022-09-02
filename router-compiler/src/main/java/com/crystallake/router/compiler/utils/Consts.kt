@@ -8,6 +8,7 @@ object Consts {
     const val ANNOTATION_TYPE_ROUTE = "$ROUTE_PACKAGE.Route"
 
     const val ACTIVITY = "android.app.Activity"
+    const val FRAGMENT = "androidx.fragment.app.Fragment"
 
     const val IROUTE_GROUP = "com.crystallake.router.api.template.IRouteGroup"
     const val ITROUTE_ROOT = "com.crystallake.router.api.template.IRouteRoot"

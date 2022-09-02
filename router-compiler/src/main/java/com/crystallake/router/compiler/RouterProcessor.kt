@@ -6,6 +6,7 @@ import com.crystallake.router.annotation.RouteType
 import com.crystallake.router.compiler.utils.Consts
 import com.crystallake.router.compiler.utils.Consts.ACTIVITY
 import com.crystallake.router.compiler.utils.Consts.ANNOTATION_TYPE_ROUTE
+import com.crystallake.router.compiler.utils.Consts.FRAGMENT
 import com.crystallake.router.compiler.utils.Consts.IROUTE_GROUP
 import com.crystallake.router.compiler.utils.Consts.ITROUTE_ROOT
 import com.crystallake.router.compiler.utils.Consts.METHOD_LOAD_INTO
@@ -66,6 +67,9 @@ class RouterProcessor : BaseProcessor() {
             rootMap.clear()
 
             val type_Activity = elementUtils?.getTypeElement(ACTIVITY)?.asType()
+            val type_Fragmentx = elementUtils?.getTypeElement(FRAGMENT)?.asType()
+            val type_Fragment = elementUtils?.getTypeElement(FRAGMENT)?.asType()
+
 
             routeElements.forEach {
                 it?.let { element ->
@@ -74,6 +78,11 @@ class RouterProcessor : BaseProcessor() {
                     if (types?.isSubtype(tm, type_Activity) == true) {
                         route.path.forEach { path ->
                             val routeMeta = RouteMeta(path, element, RouteType.ACTIVITY, null)
+                            categories(routeMeta)
+                        }
+                    } else if (types?.isSubtype(tm, type_Fragment) == true || types?.isSubtype(tm, type_Fragmentx) == true) {
+                        route.path.forEach { path ->
+                            val routeMeta = RouteMeta(path, element, RouteType.FRAGMENT, null)
                             categories(routeMeta)
                         }
                     }

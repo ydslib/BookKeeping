@@ -1,5 +1,6 @@
 package com.crystallake.mine
 
+import androidx.fragment.app.Fragment
 import com.crystallake.base.activity.DataBindingActivity
 import com.crystallake.base.config.DataBindingConfig
 import com.crystallake.base.vm.BaseViewModel
@@ -21,6 +22,13 @@ class SettingActivity : DataBindingActivity<ActivitySettingBinding, BaseViewMode
             Router.getInstance().build("login.LoginActivity").apply {
                 bundle?.putString("test", "test")
             }.navigation(this)
+        }
+
+        mBinding?.fragmentTest?.setOnClickListener {
+            val fragment = Router.getInstance().build("mine.MineFragment").apply {
+                bundle?.putString("test","test")
+            }.navigation() as Fragment
+            supportFragmentManager.beginTransaction().add(R.id.container,fragment).commit()
         }
     }
 }

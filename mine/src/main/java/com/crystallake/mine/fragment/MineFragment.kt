@@ -6,7 +6,9 @@ import com.crystallake.base.fragment.DataBindingFragment
 import com.crystallake.base.vm.BaseViewModel
 import com.crystallake.mine.R
 import com.crystallake.mine.databinding.FragmentMineBinding
+import com.crystallake.router.annotation.Route
 
+@Route("mine.MineFragment")
 class MineFragment : DataBindingFragment<FragmentMineBinding, BaseViewModel>() {
 
     override fun createObserver() {
@@ -14,6 +16,7 @@ class MineFragment : DataBindingFragment<FragmentMineBinding, BaseViewModel>() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        mBinding?.text?.text = arguments?.getString("test") ?: "测试"
     }
 
     override fun lazyLoadData() {
