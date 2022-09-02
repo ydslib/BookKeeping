@@ -1,6 +1,6 @@
-package com.crystallake.router.facade.callback
+package com.crystallake.router.api.facade.callback
 
-import com.crystallake.router.facade.Postcard
+import com.crystallake.router.api.facade.Postcard
 
 interface NavigationCallback {
     /**

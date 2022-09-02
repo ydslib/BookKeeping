@@ -1,4 +1,4 @@
-package com.crystallake.router.utils
+package com.crystallake.router.api.utils
 
 object Consts {
     const val ROUTER_SP_CACHE_KEY = "SP_ROUTER_CACHE"

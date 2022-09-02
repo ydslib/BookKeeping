@@ -24,12 +24,12 @@ public class RouteMeta {
 
     }
 
-    public RouteMeta(Route route, Class<?> destination, RouteType type) {
-        this(type, null, destination, null, route.path(), null, null, 0, 0);
+    public RouteMeta(String path, Class<?> destination, RouteType type) {
+        this(type, null, destination, null, path, null, null, 0, 0);
     }
 
-    public RouteMeta(Route route, Element rawType, RouteType type, Map<String, Integer> paramsType) {
-        this(type, rawType, null, null, route.path(), null, paramsType, 0, 0);
+    public RouteMeta(String path, Element rawType, RouteType type, Map<String, Integer> paramsType) {
+        this(type, rawType, null, null, path, null, paramsType, 0, 0);
     }
 
     public RouteMeta(RouteType type, Element rawType, Class<?> destination, String name, String path, String group, Map<String, Integer> paramsType, int priority, int extra) {

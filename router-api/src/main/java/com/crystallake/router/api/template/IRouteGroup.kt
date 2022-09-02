@@ -1,4 +1,4 @@
-package com.crystallake.router.template
+package com.crystallake.router.api.template
 
 import com.crystallake.router.annotation.RouteMeta
 

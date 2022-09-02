@@ -1,7 +1,7 @@
-package com.crystallake.router.core
+package com.crystallake.router.api.core
 
 import com.crystallake.router.annotation.RouteMeta
-import com.crystallake.router.template.IRouteGroup
+import com.crystallake.router.api.template.IRouteGroup
 
 class Warehouse {
 

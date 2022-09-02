@@ -70,7 +70,8 @@ dependencies {
 
     implementation "com.github.ydslib:Base:${Config.baseVersion}"
     implementation project(":core")
-    implementation project(":router")
+    implementation project(":router-api")
+    implementation project(":router-annotation")
     implementation project(":config")
     kapt project(":router-compiler")
 }

@@ -1,4 +1,4 @@
-package com.crystallake.router.utils;
+package com.crystallake.router.api.utils;
 
 // Copy from galaxy sdk ${com.alibaba.android.galaxy.utils.ClassUtils}
 
@@ -9,7 +9,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
 
-import com.crystallake.router.thread.DefaultPoolExecutor;
+
+import com.crystallake.router.api.thread.DefaultPoolExecutor;
 
 import java.io.File;
 import java.io.IOException;

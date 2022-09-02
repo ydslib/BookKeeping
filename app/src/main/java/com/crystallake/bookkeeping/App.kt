@@ -2,7 +2,7 @@ package com.crystallake.bookkeeping
 
 import android.app.Application
 import com.crystallake.core.AppInitTool
-import com.crystallake.router.Router
+import com.crystallake.router.api.Router
 
 class App : Application() {
 

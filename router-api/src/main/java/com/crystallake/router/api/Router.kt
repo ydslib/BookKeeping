@@ -1,4 +1,4 @@
-package com.crystallake.router
+package com.crystallake.router.api
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -12,21 +12,21 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.crystallake.router.annotation.RouteType
-import com.crystallake.router.core.Warehouse
-import com.crystallake.router.exception.HandlerException
-import com.crystallake.router.exception.NoRouteFoundException
-import com.crystallake.router.facade.Postcard
-import com.crystallake.router.facade.callback.NavigationCallback
-import com.crystallake.router.template.IRouteGroup
-import com.crystallake.router.template.IRouteRoot
-import com.crystallake.router.utils.ClassUtils
-import com.crystallake.router.utils.Consts
-import com.crystallake.router.utils.Consts.DOT
-import com.crystallake.router.utils.Consts.ROUTER_ROOT_PACKAGE
-import com.crystallake.router.utils.Consts.ROUTER_SP_CACHE_KEY
-import com.crystallake.router.utils.Consts.ROUTER_SP_KEY_MAP
-import com.crystallake.router.utils.Consts.SDK_NAME
-import com.crystallake.router.utils.PackageUtils
+import com.crystallake.router.api.core.Warehouse
+import com.crystallake.router.api.exception.HandlerException
+import com.crystallake.router.api.exception.NoRouteFoundException
+import com.crystallake.router.api.facade.Postcard
+import com.crystallake.router.api.facade.callback.NavigationCallback
+import com.crystallake.router.api.template.IRouteGroup
+import com.crystallake.router.api.template.IRouteRoot
+import com.crystallake.router.api.utils.ClassUtils
+import com.crystallake.router.api.utils.Consts
+import com.crystallake.router.api.utils.Consts.DOT
+import com.crystallake.router.api.utils.Consts.ROUTER_ROOT_PACKAGE
+import com.crystallake.router.api.utils.Consts.ROUTER_SP_CACHE_KEY
+import com.crystallake.router.api.utils.Consts.ROUTER_SP_KEY_MAP
+import com.crystallake.router.api.utils.Consts.SDK_NAME
+import com.crystallake.router.api.utils.PackageUtils
 
 class Router {
 
@@ -146,18 +146,18 @@ class Router {
     }
 
     private fun extractGroup(path: String?): String? {
-        if (path.isNullOrEmpty() || !path.startsWith("/")) {
-            throw HandlerException(TAG + "Extract the default group failed, the path must be start with '/' and contain more than 2 '/'!")
+        if (path.isNullOrEmpty() && path?.contains(".") == false) {
+            throw HandlerException(TAG + "Extract the default group failed, the path must has 2 element")
         }
-        try {
-            val defaultGroup = path.substring(1, path.indexOf("/", 1))
-            if (defaultGroup.isEmpty()) {
-                throw HandlerException(TAG + "Extract the default group failed! There's nothing between 2 '/'!")
+        return try {
+            val defaultGroup = path?.substring(0, path.indexOf("."))
+            if (defaultGroup?.isEmpty() == true) {
+                throw HandlerException(TAG + "Extract the default group failed! ")
             } else {
-                return defaultGroup
+                defaultGroup
             }
         } catch (e: Exception) {
-            return null
+            null
         }
     }
 

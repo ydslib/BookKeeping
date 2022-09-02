@@ -5,7 +5,6 @@ import com.crystallake.base.config.DataBindingConfig
 import com.crystallake.base.vm.BaseViewModel
 import com.crystallake.home.databinding.ActivityHomeBinding
 import com.crystallake.home.fragment.HomeFragment
-import com.crystallake.router.facade.Postcard
 
 class HomeActivity : DataBindingActivity<ActivityHomeBinding, BaseViewModel>() {
 
@@ -16,8 +15,6 @@ class HomeActivity : DataBindingActivity<ActivityHomeBinding, BaseViewModel>() {
 
     override fun initData() {
         super.initData()
-
-        val postcard = Postcard("test", "test1", null, null)
 
         supportFragmentManager.beginTransaction().replace(R.id.homeContainer, HomeFragment())
             .commit()

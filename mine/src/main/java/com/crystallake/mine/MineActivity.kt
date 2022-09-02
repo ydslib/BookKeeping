@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.crystallake.router.annotation.Route
 
-@Route("/mine/MineActivity")
+@Route(path = ["mine.MineActivity", "mine.MineActivity02"])
 class MineActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,9 +1,9 @@
-package com.crystallake.router.utils;
+package com.crystallake.router.api.utils;
 
 
-import static com.crystallake.router.utils.Consts.LAST_VERSION_CODE;
-import static com.crystallake.router.utils.Consts.LAST_VERSION_NAME;
-import static com.crystallake.router.utils.Consts.ROUTER_SP_CACHE_KEY;
+import static com.crystallake.router.api.utils.Consts.LAST_VERSION_CODE;
+import static com.crystallake.router.api.utils.Consts.LAST_VERSION_NAME;
+import static com.crystallake.router.api.utils.Consts.ROUTER_SP_CACHE_KEY;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -64,7 +64,8 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:${Config.espressoCoreVersion}"
     implementation "com.github.ydslib:Base:${Config.baseVersion}"
     implementation project(":core")
-    implementation project(":router")
+    implementation project(":router-api")
+    implementation project(":router-annotation")
 
     if (!Config.isApp){
         implementation project(":main")

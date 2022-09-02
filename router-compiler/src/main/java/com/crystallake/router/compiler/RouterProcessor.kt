@@ -71,10 +71,11 @@ class RouterProcessor : BaseProcessor() {
                 it?.let { element ->
                     val tm = element.asType()
                     val route = element.getAnnotation(Route::class.java)
-                    var routeMeta: RouteMeta?
                     if (types?.isSubtype(tm, type_Activity) == true) {
-                        routeMeta = RouteMeta(route, element, RouteType.ACTIVITY, null)
-                        categories(routeMeta)
+                        route.path.forEach { path ->
+                            val routeMeta = RouteMeta(path, element, RouteType.ACTIVITY, null)
+                            categories(routeMeta)
+                        }
                     }
                 }
             }
@@ -248,15 +249,15 @@ class RouterProcessor : BaseProcessor() {
         }
     }
 
-    private fun routeVerify(meta: RouteMeta): Boolean {
-        val path = meta.path
-        if (path.isNullOrEmpty() || !path.startsWith("/")) {
+    private fun routeVerify(meta: RouteMeta?): Boolean {
+        val path = meta?.path
+        if (path.isNullOrEmpty() || !path.contains(".")) {
             return false
         }
 
         if (meta.group.isNullOrEmpty()) {
             try {
-                val defaultGroup = path.substring(1, path.indexOf("/", 1))
+                val defaultGroup = path.substring(0, path.indexOf("."))
                 if (defaultGroup.isNullOrEmpty()) {
                     return false
                 }

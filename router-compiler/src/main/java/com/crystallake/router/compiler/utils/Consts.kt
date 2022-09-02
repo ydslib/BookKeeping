@@ -9,8 +9,8 @@ object Consts {
 
     const val ACTIVITY = "android.app.Activity"
 
-    const val IROUTE_GROUP = "com.crystallake.router.template.IRouteGroup"
-    const val ITROUTE_ROOT = "com.crystallake.router.template.IRouteRoot"
+    const val IROUTE_GROUP = "com.crystallake.router.api.template.IRouteGroup"
+    const val ITROUTE_ROOT = "com.crystallake.router.api.template.IRouteRoot"
 
     const val METHOD_LOAD_INTO = "loadInto"
 

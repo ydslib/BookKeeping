@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import com.crystallake.core.AppInit
 import com.crystallake.core.BaseApplication
-import com.crystallake.router.Router
+import com.crystallake.router.api.Router
 
 class LoginApp : BaseApplication(), AppInit {
 

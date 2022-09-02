@@ -2,17 +2,25 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
+//    id 'maven-publish'
 }
-
+group = 'com.github.ydslib'
+version = '1.0.0'
 android {
-    compileSdkVersion Config.compileSdk
+    compileSdkVersion 30
 
     defaultConfig {
-        minSdkVersion Config.minSdk
-        targetSdkVersion Config.targetSdk
+        minSdkVersion 21
+        targetSdkVersion 30
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -20,7 +28,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        lintOptions { abortOnError false }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -29,20 +36,32 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
-    kapt {
-        arguments {
-            arg("ROUTER_MODULE_NAME", project.getName())
-        }
-    }
-
 }
 
-dependencies {
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
 
+
+
+dependencies {
     implementation "androidx.core:core-ktx:${Config.coreKtxVersion}"
     implementation "androidx.appcompat:appcompat:${Config.appcompatVersion}"
     implementation "com.google.android.material:material:${Config.materialVersion}"
     api project(":router-annotation")
     kapt project(":router-compiler")
 }
+//
+//afterEvaluate{
+//    publishing{
+//        publications{
+//            release(MavenPublication){
+//                from components.release
+//                groupId 'com.github.ydslib'
+//                artifactId 'router-api'
+//                version '1.0.12'
+//            }
+//        }
+//    }
+//}

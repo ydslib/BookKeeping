@@ -1,11 +1,11 @@
-package com.crystallake.router.facade
+package com.crystallake.router.api.facade
 
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import com.crystallake.router.Router
+import com.crystallake.router.api.Router
 import com.crystallake.router.annotation.RouteMeta
-import com.crystallake.router.facade.callback.NavigationCallback
+import com.crystallake.router.api.facade.callback.NavigationCallback
 
 class Postcard : RouteMeta {
 
