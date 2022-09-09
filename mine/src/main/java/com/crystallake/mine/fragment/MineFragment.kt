@@ -6,7 +6,7 @@ import com.crystallake.base.fragment.DataBindingFragment
 import com.crystallake.base.vm.BaseViewModel
 import com.crystallake.mine.R
 import com.crystallake.mine.databinding.FragmentMineBinding
-import com.crystallake.router.annotation.Route
+import com.winit.router.annotation.Route
 
 @Route("mine.MineFragment")
 class MineFragment : DataBindingFragment<FragmentMineBinding, BaseViewModel>() {

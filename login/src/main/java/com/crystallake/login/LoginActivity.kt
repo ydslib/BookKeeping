@@ -2,7 +2,7 @@ package com.crystallake.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.crystallake.router.annotation.Route
+import com.winit.router.annotation.Route
 
 
 @Route("login.LoginActivity")

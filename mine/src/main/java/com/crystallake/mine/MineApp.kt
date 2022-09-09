@@ -3,7 +3,7 @@ package com.crystallake.mine
 import android.app.Application
 import com.crystallake.base.app.BaseApplication
 import com.crystallake.core.AppInit
-import com.crystallake.router.api.Router
+import com.winit.router.Router
 
 class MineApp : BaseApplication(), AppInit {
 

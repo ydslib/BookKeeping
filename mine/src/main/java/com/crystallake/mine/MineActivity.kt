@@ -2,7 +2,7 @@ package com.crystallake.mine
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.crystallake.router.annotation.Route
+import com.winit.router.annotation.Route
 
 @Route(path = ["mine.MineActivity", "mine.MineActivity02"])
 class MineActivity : AppCompatActivity() {

@@ -5,7 +5,7 @@ import com.crystallake.base.activity.DataBindingActivity
 import com.crystallake.base.config.DataBindingConfig
 import com.crystallake.base.vm.BaseViewModel
 import com.crystallake.main.databinding.ActivityMainBinding
-import com.crystallake.router.api.Router
+import com.winit.router.Router
 
 class MainActivity : DataBindingActivity<ActivityMainBinding, BaseViewModel>() {
 
