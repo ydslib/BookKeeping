@@ -23,4 +23,6 @@ object Config {
 
     const val aRouterRegisterVersion = "1.0.2"
     const val aRouterVersion = "1.5.2"
+
+    const val host = "http://10.99.17.12:8083/"
 }

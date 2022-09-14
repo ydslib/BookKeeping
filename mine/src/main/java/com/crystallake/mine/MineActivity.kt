@@ -1,13 +1,17 @@
 package com.crystallake.mine
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import com.crystallake.base.config.DataBindingConfig
+import com.crystallake.common.CommonActivity
+import com.crystallake.mine.databinding.ActivityMineBinding
+import com.crystallake.mine.vm.MineViewModel
 import com.winit.router.annotation.Route
 
 @Route(path = ["mine.MineActivity", "mine.MineActivity02"])
-class MineActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mine)
+class MineActivity : CommonActivity<ActivityMineBinding, MineViewModel>() {
+
+
+
+    override fun initDataBindingConfig(): DataBindingConfig {
+        return DataBindingConfig(R.layout.activity_mine)
     }
 }

@@ -20,6 +20,7 @@ class MineFragment : DataBindingFragment<FragmentMineBinding, BaseViewModel>() {
     }
 
     override fun lazyLoadData() {
+
     }
 
     override fun initDataBindingConfig(): DataBindingConfig {

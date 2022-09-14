@@ -65,8 +65,8 @@ dependencies {
     testImplementation "junit:junit:${Config.testJunitVersion}"
     androidTestImplementation "androidx.test.ext:junit:${Config.androidTestJunitVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${Config.espressoCoreVersion}"
-    implementation "com.github.ydslib:Base:${Config.baseVersion}"
 
+    implementation project(":common")
     implementation project(":router-api")
     implementation project(":router-annotation")
     implementation project(":config")

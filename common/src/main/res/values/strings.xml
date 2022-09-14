@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_home">首页</string>
+    <string name="common_statistics">统计</string>
+    <string name="common_wallet">钱包</string>
+    <string name="common_mine">我的</string>
+</resources>

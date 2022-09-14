@@ -7,6 +7,10 @@ import com.crystallake.base.vm.BaseViewModel
 import com.crystallake.main.databinding.ActivityMainBinding
 import com.winit.router.Router
 
+/**
+ *  d9e1e7
+ *  63c4d0
+ */
 class MainActivity : DataBindingActivity<ActivityMainBinding, BaseViewModel>() {
 
     override fun initDataBindingConfig(): DataBindingConfig {
@@ -19,5 +23,7 @@ class MainActivity : DataBindingActivity<ActivityMainBinding, BaseViewModel>() {
             Router.getInstance().build("mine.SettingActivity").navigation(this)
         }
     }
+
+
 
 }
