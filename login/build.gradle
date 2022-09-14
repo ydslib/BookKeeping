@@ -44,7 +44,7 @@ android {
             if (Config.isApp){
                 manifest.srcFile 'src/main/AndroidManifest.xml'
             }else{
-                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+                manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
             }
         }
     }

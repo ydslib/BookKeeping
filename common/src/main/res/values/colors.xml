@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="common_F6FBFF">#F6FBFF</color>
+    <color name="common_66212121">#66212121</color>
+    <color name="common_63c4d0">#63c4d0</color>
 </resources>

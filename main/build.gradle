@@ -43,8 +43,14 @@ android {
             if (Config.isApp){
                 manifest.srcFile 'src/main/AndroidManifest.xml'
             }else{
-                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+                manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
             }
+        }
+    }
+
+    kapt {
+        arguments {
+            arg("ROUTER_MODULE_NAME", project.getName())
         }
     }
 
@@ -70,4 +76,5 @@ dependencies {
     implementation project(":router-api")
     implementation project(":router-annotation")
     implementation project(":config")
+    implementation project(":home-api")
 }

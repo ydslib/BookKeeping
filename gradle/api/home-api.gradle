@@ -1,0 +1,52 @@
+//api 项目的buildgralde
+
+// 模块的配置gradle
+apply plugin: "com.android.library"
+
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-kapt"
+
+android {
+    compileSdkVersion Config.compileSdk
+
+    defaultConfig {
+        // 模块的applicationId配置
+        minSdkVersion Config.minSdk
+        targetSdkVersion Config.targetSdk
+        versionCode Config.versionCode
+        versionName Config.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+        multiDexEnabled true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
+    // 模块化后的清单文件配置
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+        }
+    }
+}
+
+dependencies {
+    implementation "androidx.core:core-ktx:${Config.coreKtxVersion}"
+    implementation "androidx.appcompat:appcompat:${Config.appcompatVersion}"
+    implementation "com.google.android.material:material:${Config.materialVersion}"
+    implementation "androidx.constraintlayout:constraintlayout:${Config.constraintlayoutVersion}"
+}

@@ -1,9 +1,11 @@
+
+apply from:'./gradle/api/api-compile.gradle'
 rootProject.name = "BookKeeping"
 include ':app'
 include ':main'
 include ':core'
 include ':login'
-include ':home'
+includeWithApi ":home"
 include ':router'
 include ':config'
 include ':mine'
