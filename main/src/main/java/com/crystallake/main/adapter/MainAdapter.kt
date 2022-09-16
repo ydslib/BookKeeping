@@ -3,8 +3,9 @@ package com.crystallake.main.adapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.crystallake.home.fragment.HomeFragmentProvider
-import java.util.*
+import com.crystallake.common.interfaces.FragmentProvider
+import com.crystallake.config.consts.RouterPath
+import com.winit.router.Router
 
 class MainAdapter(var activity: AppCompatActivity) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int {
@@ -12,8 +13,9 @@ class MainAdapter(var activity: AppCompatActivity) : FragmentStateAdapter(activi
     }
 
     override fun createFragment(position: Int): Fragment {
-        val loader = ServiceLoader.load(HomeFragmentProvider::class.java)
-        val homeFragment = loader.first().createHomeFragment();
+
+        val homeFragmentProvider = Router.getInstance().build(RouterPath.HOME_PROVIDER_HOME).navigation()
+        val homeFragment = (homeFragmentProvider as? FragmentProvider)?.createFragment()?:Fragment()
 
         return when (position) {
             0 -> homeFragment

@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.winit.router.Router
 import com.winit.router.annotation.RouteMeta
 import com.winit.router.facade.callback.NavigationCallback
+import com.winit.router.template.IProvider
 
 class Postcard : RouteMeta {
 
@@ -17,6 +18,7 @@ class Postcard : RouteMeta {
     var enterAnim: Int = -1
     var exitAnim: Int = -1
     var optionBundle: Bundle? = null
+    var provider: IProvider? = null
 
     constructor() : this(null, null)
     constructor(path: String?, group: String?) : this(path, group, null, null)

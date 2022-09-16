@@ -12,5 +12,6 @@ object Consts {
     const val SEPARATOR = "$$"
     const val SDK_NAME = "Router"
     const val SUFFIX_ROOT = "Root"
+    const val SUFFIX_PROVIDERS = "Providers"
 
 }

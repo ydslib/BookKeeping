@@ -1,0 +1,11 @@
+apply from:"${rootProject.rootDir}/gradle/module/base.gradle"
+
+dependencies {
+
+    implementation "androidx.core:core-ktx:${Config.coreKtxVersion}"
+    implementation "androidx.appcompat:appcompat:${Config.appcompatVersion}"
+    implementation "com.google.android.material:material:${Config.materialVersion}"
+    implementation "androidx.constraintlayout:constraintlayout:${Config.constraintlayoutVersion}"
+
+    implementation project(":common")
+}

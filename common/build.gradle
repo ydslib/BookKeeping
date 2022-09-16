@@ -1,34 +1,4 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-}
-
-android {
-    compileSdkVersion Config.compileSdk
-
-    defaultConfig {
-        minSdkVersion Config.minSdk
-        targetSdkVersion Config.targetSdk
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-}
+apply from:"${rootProject.rootDir}/gradle/module/library.gradle"
 
 dependencies {
 
@@ -40,4 +10,7 @@ dependencies {
     implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
     // kotlin扩展（可选）
     implementation 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
+
+    implementation project(":router-api")
+    implementation project(":router-annotation")
 }

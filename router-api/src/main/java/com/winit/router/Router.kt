@@ -12,20 +12,12 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.winit.router.annotation.RouteType
+import com.winit.router.core.LogisticsCenter
 import com.winit.router.core.Warehouse
 import com.winit.router.exception.HandlerException
-import com.winit.router.exception.NoRouteFoundException
 import com.winit.router.facade.Postcard
 import com.winit.router.facade.callback.NavigationCallback
-import com.winit.router.template.IRouteGroup
-import com.winit.router.template.IRouteRoot
-import com.winit.router.utils.ClassUtils
-import com.winit.router.utils.Consts
-import com.winit.router.utils.Consts.DOT
-import com.winit.router.utils.Consts.ROUTER_ROOT_PACKAGE
-import com.winit.router.utils.Consts.ROUTER_SP_CACHE_KEY
-import com.winit.router.utils.Consts.ROUTER_SP_KEY_MAP
-import com.winit.router.utils.Consts.SDK_NAME
+
 
 class Router {
 
@@ -43,40 +35,7 @@ class Router {
         @JvmStatic
         fun setUp(application: Application) {
             mContext = application
-            registerRouter(application)
-        }
-
-        @JvmStatic
-        @Synchronized
-        fun addRouteGroupDynamic(groupName: String, group: IRouteGroup?) {
-            if (Warehouse.groupsIndex.containsKey(groupName)) {
-                Warehouse.groupsIndex[groupName]?.getConstructor()?.newInstance()
-                    ?.loadInto(Warehouse.routes)
-                Warehouse.groupsIndex.remove(groupName)
-            }
-            group?.loadInto(Warehouse.routes)
-        }
-
-        fun registerRouter(context: Context) {
-
-            try {
-                val routerMap =
-                    ClassUtils.getFileNameByPackageName(
-                        context,
-                        ROUTER_ROOT_PACKAGE
-                    )
-
-                routerMap?.forEach { className ->
-                    if (className.startsWith(ROUTER_ROOT_PACKAGE + DOT + SDK_NAME + Consts.SEPARATOR + Consts.SUFFIX_ROOT)) {
-                        ((Class.forName(className).getConstructor()
-                            .newInstance()) as IRouteRoot).loadInto(Warehouse.groupsIndex)
-                    }
-                }
-            } catch (e: Exception) {
-
-            }
-
-
+            LogisticsCenter.registerRouter(application)
         }
     }
 
@@ -140,42 +99,6 @@ class Router {
         }
     }
 
-    fun completion(postcard: Postcard?) {
-        if (postcard == null) {
-            throw NoRouteFoundException("No postcard!")
-        }
-        val routeMeta = Warehouse.routes[postcard.path]
-
-        if (routeMeta == null) {
-            if (!Warehouse.groupsIndex.containsKey(postcard.group)) {
-                throw NoRouteFoundException(TAG + "There is no route match the path [" + postcard.path + "], in group [" + postcard.group + "]")
-            } else {
-                try {
-                    addRouteGroupDynamic(postcard.group, null)
-                } catch (e: Exception) {
-
-                }
-                completion(postcard)
-            }
-        }
-
-        if (routeMeta != null) {
-            postcard.destination = routeMeta.destination
-            postcard.type = routeMeta.type
-
-
-            when (postcard.type) {
-                RouteType.FRAGMENT -> {
-                    //
-                }
-                else -> {
-                    //
-                }
-            }
-        }
-
-    }
-
     private fun runOnUiThread(runnable: Runnable) {
         if (Looper.getMainLooper().thread != Thread.currentThread()) {
             handler.post(runnable)
@@ -228,7 +151,7 @@ class Router {
 
         postcard?.context = context ?: mContext
         try {
-            completion(postcard)
+            LogisticsCenter.completion(mContext, postcard)
         } catch (e: Exception) {
             callback?.onLost(postcard)
             return null
@@ -236,6 +159,25 @@ class Router {
         callback?.onFound(postcard)
         return navigation(postcard, requestCode, callback)
     }
+
+    fun <T> navigation(service: Class<out T>): T? {
+        try {
+            var postcard = LogisticsCenter.buildProvider(service.name)
+            if (postcard == null) {
+                postcard = LogisticsCenter.buildProvider(service.simpleName)
+            }
+            if (postcard == null) {
+                return null
+            }
+            postcard.context = mContext
+            LogisticsCenter.completion(mContext, postcard)
+            return postcard.provider as? T
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
+    }
+
 
     private fun navigation(
         postcard: Postcard?,
@@ -287,6 +229,9 @@ class Router {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
+            }
+            RouteType.PROVIDER -> {
+                return postcard.provider
             }
             else -> {
                 return null

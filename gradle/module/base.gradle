@@ -3,16 +3,13 @@ if (Config.isApp){
 }else{
     apply plugin: 'com.android.library'
 }
+
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion Config.compileSdk
-
     defaultConfig {
-        if (Config.isApp){
-            applicationId  "com.crystallake.home"
-        }
         minSdkVersion Config.minSdk
         targetSdkVersion Config.targetSdk
         versionCode Config.versionCode
@@ -20,6 +17,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -53,24 +51,4 @@ android {
             arg("ROUTER_MODULE_NAME", project.getName())
         }
     }
-}
-
-dependencies {
-
-    implementation "androidx.core:core-ktx:${Config.coreKtxVersion}"
-    implementation "androidx.appcompat:appcompat:${Config.appcompatVersion}"
-    implementation "com.google.android.material:material:${Config.materialVersion}"
-    implementation "androidx.constraintlayout:constraintlayout:${Config.constraintlayoutVersion}"
-    testImplementation "junit:junit:${Config.testJunitVersion}"
-    androidTestImplementation "androidx.test.ext:junit:${Config.androidTestJunitVersion}"
-    androidTestImplementation "androidx.test.espresso:espresso-core:${Config.espressoCoreVersion}"
-
-    implementation project(":core")
-    implementation project(":common")
-
-    implementation project(":router-api")
-    implementation project(":router-annotation")
-    kapt project(":router-compiler")
-    implementation project(":config")
-    implementation project(":home-api")
 }

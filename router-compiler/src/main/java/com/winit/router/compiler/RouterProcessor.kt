@@ -15,6 +15,8 @@ import com.winit.router.compiler.utils.Consts.NAME_OF_GROUP
 import com.winit.router.compiler.utils.Consts.PACKAGE_OF_GENERATE_FILE
 import com.google.auto.service.AutoService
 import com.squareup.javapoet.*
+import com.winit.router.compiler.utils.Consts.IPROVIDER_GROUP
+import com.winit.router.compiler.utils.Consts.NAME_OF_PROVIDER
 import java.util.*
 import javax.annotation.processing.ProcessingEnvironment
 import javax.annotation.processing.Processor
@@ -41,7 +43,7 @@ class RouterProcessor : BaseProcessor() {
     @Synchronized
     override fun init(processingEnv: ProcessingEnvironment?) {
         super.init(processingEnv)
-
+        iProvider = elementUtils?.getTypeElement(Consts.IPROVIDER)?.asType()
     }
 
     override fun process(
@@ -81,9 +83,18 @@ class RouterProcessor : BaseProcessor() {
                             val routeMeta = RouteMeta(path, element, RouteType.ACTIVITY, null)
                             categories(routeMeta)
                         }
-                    } else if (types?.isSubtype(tm, type_Fragment) == true || types?.isSubtype(tm, type_Fragmentx) == true) {
+                    } else if (types?.isSubtype(tm, type_Fragment) == true || types?.isSubtype(
+                            tm,
+                            type_Fragmentx
+                        ) == true
+                    ) {
                         route.path.forEach { path ->
                             val routeMeta = RouteMeta(path, element, RouteType.FRAGMENT, null)
+                            categories(routeMeta)
+                        }
+                    } else if (types?.isSubtype(tm, iProvider) == true) {
+                        route.path.forEach { path ->
+                            val routeMeta = RouteMeta(path, element, RouteType.PROVIDER, null)
                             categories(routeMeta)
                         }
                     }
@@ -93,9 +104,76 @@ class RouterProcessor : BaseProcessor() {
 
             buildRootRouter(routeElements)
 
+            buildProviderRouter(routeElements)
 
         }
     }
+
+    private fun buildProviderRouter(routeElements: Set<Element?>) {
+        val type_IProviderGroup = elementUtils?.getTypeElement(IPROVIDER_GROUP)
+        val routeMetaCn = ClassName.get(RouteMeta::class.java)
+        val routeTypeCn = ClassName.get(RouteType::class.java)
+
+        val inputMapTypeOfGroup = ParameterizedTypeName.get(
+            ClassName.get(MutableMap::class.java),
+            ClassName.get(String::class.java),
+            ClassName.get(RouteMeta::class.java)
+        )
+        val providerParamSpec = ParameterSpec.builder(inputMapTypeOfGroup, "providers").build()
+        val loadIntoMethodOfProviderBuilder = MethodSpec.methodBuilder(METHOD_LOAD_INTO)
+            .addAnnotation(Override::class.java)
+            .addModifiers(Modifier.PUBLIC)
+            .addParameter(providerParamSpec)
+
+        groupMap.entries.forEach { entry ->
+            val groupData = entry.value
+            groupData.forEach { routeMeta ->
+                val className = ClassName.get(routeMeta.rawType as TypeElement)
+                when (routeMeta.type) {
+                    RouteType.PROVIDER -> {
+                        val interfaces = (routeMeta.rawType as TypeElement).interfaces
+                        interfaces.forEach { tm ->
+                            if (types?.isSameType(tm, iProvider) == true) {
+                                loadIntoMethodOfProviderBuilder.addStatement(
+                                    "providers.put(\$S,\$T.build(\$T." + routeMeta.type + ", \$T.class, \$S, \$S, null, " + routeMeta.priority + ", " + routeMeta.extra + "))",
+                                    (routeMeta.rawType).toString(),
+                                    routeMetaCn,
+                                    routeTypeCn,
+                                    className,
+                                    routeMeta.path,
+                                    routeMeta.group
+                                )
+                            } else if (types?.isSubtype(tm, iProvider) == true) {
+                                loadIntoMethodOfProviderBuilder.addStatement(
+                                    "providers.put(\$S,\$T.build(\$T." + routeMeta.type + ", \$T.class, \$S, \$S, null, " + routeMeta.priority + ", " + routeMeta.extra + "))",
+                                    tm.toString(),
+                                    routeMetaCn,
+                                    routeTypeCn,
+                                    className,
+                                    routeMeta.path,
+                                    routeMeta.group
+                                )
+                            }
+                        }
+                    }
+                    else -> {
+
+                    }
+                }
+            }
+        }
+
+        val providerMapFileName = NAME_OF_PROVIDER + Consts.SEPARATOR + moduleName
+        JavaFile.builder(
+            PACKAGE_OF_GENERATE_FILE,
+            TypeSpec.classBuilder(providerMapFileName)
+                .addSuperinterface(ClassName.get(type_IProviderGroup))
+                .addModifiers(Modifier.PUBLIC)
+                .addMethod(loadIntoMethodOfProviderBuilder.build())
+                .build()
+        ).build().writeTo(mFiler)
+    }
+
 
     private fun setRootMap(entrySet: MutableMap<String, MutableSet<RouteMeta>>) {
         entrySet.entries.forEach { entry ->

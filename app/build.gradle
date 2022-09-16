@@ -71,5 +71,6 @@ dependencies {
         implementation project(":main")
         implementation project(":login")
         implementation project(":mine")
+        implementation project(":home")
     }
 }

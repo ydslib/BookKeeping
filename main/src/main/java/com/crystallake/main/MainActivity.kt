@@ -4,6 +4,7 @@ package com.crystallake.main
 import androidx.core.content.ContextCompat
 import com.crystallake.base.config.DataBindingConfig
 import com.crystallake.common.CommonActivity
+import com.crystallake.main.adapter.MainAdapter
 import com.crystallake.main.databinding.ActivityMainBinding
 import com.crystallake.main.vm.MainViewModel
 
@@ -14,7 +15,9 @@ import com.crystallake.main.vm.MainViewModel
 class MainActivity : CommonActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun initDataBindingConfig(): DataBindingConfig {
-        return DataBindingConfig(R.layout.activity_main).addBindingParam(BR.click, ClickProxy())
+        return DataBindingConfig(R.layout.activity_main)
+            .addBindingParam(BR.click, ClickProxy())
+            .addBindingParam(BR.adapter,MainAdapter(this))
     }
 
     override fun initData() {
