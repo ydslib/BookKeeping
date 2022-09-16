@@ -72,7 +72,9 @@
             app:layout_constraintStart_toEndOf="@+id/homeCl"
             app:layout_constraintTop_toTopOf="@+id/navigation_container"
             app:layout_constraintBottom_toBottomOf="@+id/navigation_container"
-            app:layout_constraintEnd_toStartOf="@+id/addCl">
+            app:layout_constraintEnd_toStartOf="@+id/addCl"
+            android:onClick="@{()->click.goStatistics()}"
+            >
 
             <ImageView
                 android:id="@+id/statisticsIv"

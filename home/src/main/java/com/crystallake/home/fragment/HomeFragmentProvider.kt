@@ -7,7 +7,7 @@ import com.crystallake.config.consts.RouterPath
 import com.winit.router.annotation.Route
 import com.winit.router.template.IProvider
 
-@Route(RouterPath.HOME_PROVIDER_HOME)
+@Route(RouterPath.PROVIDER_HOME)
 class HomeFragmentProvider : FragmentProvider {
 
     override fun init(context: Context?) {

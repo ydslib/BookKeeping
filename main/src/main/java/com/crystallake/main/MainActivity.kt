@@ -40,10 +40,14 @@ class MainActivity : CommonActivity<ActivityMainBinding, MainViewModel>() {
         fun goStatistics() {
             lastIndex = currentIndex
             currentIndex = 1
+            mBinding?.viewPager?.setCurrentItem(currentIndex, false)
+            if (currentIndex != lastIndex) {
+                select(currentIndex)
+            }
 
         }
 
-        fun select(position: Int) {
+        private fun select(position: Int) {
             mBinding?.bottomNavigationBar?.homeIv?.setImageResource(if (position == 0) R.drawable.ic_main_home else R.drawable.ic_main_home_default)
             mBinding?.bottomNavigationBar?.homeTv?.setTextColor(
                 if (position == 0) ContextCompat.getColor(
@@ -53,12 +57,12 @@ class MainActivity : CommonActivity<ActivityMainBinding, MainViewModel>() {
             )
 
             mBinding?.bottomNavigationBar?.statisticsIv?.setImageResource(if (position == 1) R.drawable.ic_main_statistics else R.drawable.ic_main_statistics_default)
-            mBinding?.bottomNavigationBar?.homeTv?.setTextColor(
+            mBinding?.bottomNavigationBar?.statisticsTv?.setTextColor(
                 if (position == 1) ContextCompat.getColor(
                     this@MainActivity, R.color.common_63c4d0
                 ) else ContextCompat.getColor(this@MainActivity, R.color.common_66212121)
             )
-            mBinding?.bottomNavigationBar?.walletIv?.setImageResource(if (position == 3) R.drawable.ic_main_wallet_default else R.drawable.ic_main_wallet)
+            mBinding?.bottomNavigationBar?.walletIv?.setImageResource(if (position == 3) R.drawable.ic_main_wallet else R.drawable.ic_main_wallet_default)
             mBinding?.bottomNavigationBar?.walletTv?.setTextColor(
                 if (position == 3) ContextCompat.getColor(this@MainActivity, R.color.common_63c4d0)
                 else ContextCompat.getColor(this@MainActivity, R.color.common_66212121)

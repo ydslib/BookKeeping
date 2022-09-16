@@ -1,4 +1,5 @@
 apply from:"${rootProject.rootDir}/gradle/module/base.gradle"
+apply plugin: 'org.jetbrains.kotlin.android'
 
 dependencies {
 
@@ -8,4 +9,8 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:${Config.constraintlayoutVersion}"
 
     implementation project(":common")
+
+    implementation project(":router-api")
+    implementation project(":router-annotation")
+    implementation project(":config")
 }

@@ -14,11 +14,18 @@ class MainAdapter(var activity: AppCompatActivity) : FragmentStateAdapter(activi
 
     override fun createFragment(position: Int): Fragment {
 
-        val homeFragmentProvider = Router.getInstance().build(RouterPath.HOME_PROVIDER_HOME).navigation()
-        val homeFragment = (homeFragmentProvider as? FragmentProvider)?.createFragment()?:Fragment()
+        val homeFragmentProvider = Router.getInstance().build(RouterPath.PROVIDER_HOME).navigation()
+        val homeFragment =
+            (homeFragmentProvider as? FragmentProvider)?.createFragment() ?: Fragment()
+
+        val statisticsFragmentProvider =
+            Router.getInstance().build(RouterPath.PROVIDER_STATISTICS).navigation()
+        val statisticsFragment =
+            (statisticsFragmentProvider as? FragmentProvider)?.createFragment() ?: Fragment()
 
         return when (position) {
             0 -> homeFragment
+            1 -> statisticsFragment
             else -> homeFragment
         }
     }

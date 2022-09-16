@@ -4,5 +4,8 @@ object RouterPath {
 
 
     const val HOME_FRAGMENT_HOME = "home.HomeFragment"
-    const val HOME_PROVIDER_HOME = "home.HomeFragmentProvider"
+
+
+    const val PROVIDER_HOME = "home.HomeFragmentProvider"
+    const val PROVIDER_STATISTICS = "home.StatisticsFragmentProvider"
 }
