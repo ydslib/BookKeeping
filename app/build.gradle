@@ -62,10 +62,12 @@ dependencies {
     testImplementation "junit:junit:${Config.testJunitVersion}"
     androidTestImplementation "androidx.test.ext:junit:${Config.androidTestJunitVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${Config.espressoCoreVersion}"
-    implementation "com.github.ydslib:Base:${Config.baseVersion}"
+    implementation project(":common")
     implementation project(":core")
     implementation project(":router-api")
     implementation project(":router-annotation")
+    implementation 'org.ow2.asm:asm:8.0.1'//需要添加的依赖
+    implementation 'org.ow2.asm:asm-commons:8.0.1'//需要添加的依赖
 
     if (!Config.isApp){
         implementation project(":main")

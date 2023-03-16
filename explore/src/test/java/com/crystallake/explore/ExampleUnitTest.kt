@@ -1,9 +1,8 @@
-package com.crystallake.login
+package com.crystallake.explore
 
 import org.junit.Test
 
 import org.junit.Assert.*
-import java.io.FileInputStream
 
 /**
  * Example local unit test, which will execute on the development machine (host).

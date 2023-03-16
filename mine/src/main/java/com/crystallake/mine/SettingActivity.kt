@@ -30,5 +30,8 @@ class SettingActivity : DataBindingActivity<ActivitySettingBinding, BaseViewMode
             }.navigation() as Fragment
             supportFragmentManager.beginTransaction().add(R.id.container,fragment).commit()
         }
+        mBinding?.fragmentTest?.setOnClickListener{
+
+        }
     }
 }
